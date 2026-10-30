@@ -1,0 +1,22 @@
+{
+  "name": "yeet-it-infra",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Alchemy deployment for yeet it. Kept apart from the browser app: Alchemy 2.0.0-beta.84 needs effect 4.0.x while Foldkit 0.170 needs effect 4.1.x.",
+  "type": "module",
+  "scripts": {
+    "deploy": "alchemy deploy --stage prod",
+    "destroy": "alchemy destroy --stage prod",
+    "dev": "alchemy dev"
+  },
+  "dependencies": {
+    "@alchemy.run/cloudflare": "2.0.0-beta.84",
+    "@alchemy.run/domain": "2.0.0-beta.84",
+    "@alchemy.run/frontend-frameworks": "2.0.0-beta.84",
+    "@effect/platform-node": "4.0.7",
+    "alchemy": "2.0.0-beta.84",
+    "effect": "4.0.7",
+    "vite": "8.3.5",
+    "ws": "8.22.0"
+  }
+}

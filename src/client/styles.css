@@ -1,0 +1,11 @@
+:root {
+  color-scheme: light dark;
+  font-family: system-ui, sans-serif;
+}
+.rack {
+  display: flex;
+  gap: 6px;
+}
+.tile.used {
+  opacity: 0.5;
+}
