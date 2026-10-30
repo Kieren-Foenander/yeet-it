@@ -4,6 +4,7 @@ import enableText from '../../data/enable/enable1.txt?raw'
 import scheduleText from '../../data/schedule.json?raw'
 import { utcDateOf } from '../game/day.ts'
 import { Puzzle } from '../game/puzzle.ts'
+import { spellableWords } from '../game/subwords.ts'
 import { ScheduleJson } from '../generator/schedule.ts'
 import { DICTIONARY_VERSION, parseEnable } from '../generator/dictionary.ts'
 import { Lookup, puzzleFor } from './puzzles.ts'
@@ -31,11 +32,28 @@ const json = (body: string, status: number, cacheControl: string): Response =>
 const error = (status: number, message: string): Response =>
   json(JSON.stringify({ error: message }), status, 'no-store')
 
+/** A start word's accepted subwords never change, so each isolate computes them once. */
+const subwordCache = new Map<string, ReadonlyArray<string>>()
+
+const wordsFor = (start: string): ReadonlyArray<string> => {
+  const cached = subwordCache.get(start)
+
+  if (cached !== undefined) {
+    return cached
+  }
+
+  const words = spellableWords(start, dictionary)
+
+  subwordCache.set(start, words)
+
+  return words
+}
+
 const servePuzzle = (date: string): Response =>
   Lookup.$match(
     puzzleFor(
       schedule,
-      dictionary,
+      wordsFor,
       DICTIONARY_VERSION,
       date,
       utcDateOf(Date.now()),

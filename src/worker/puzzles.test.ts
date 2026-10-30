@@ -3,6 +3,7 @@ import { readFileSync } from 'node:fs'
 import { Schema } from 'effect'
 import { describe, expect, test } from 'vitest'
 
+import { spellableWords } from '../game/subwords.ts'
 import { parseEnable } from '../generator/dictionary.ts'
 import { ScheduleJson } from '../generator/schedule.ts'
 import { Lookup, puzzleFor } from './puzzles.ts'
@@ -14,7 +15,13 @@ const schedule = Schema.decodeUnknownSync(ScheduleJson)(
 const dictionary = parseEnable(readFileSync('data/enable/enable1.txt', 'utf8'))
 
 const lookup = (date: string, today: string) =>
-  puzzleFor(schedule, dictionary, 'enable1@test', date, today)
+  puzzleFor(
+    schedule,
+    start => spellableWords(start, dictionary),
+    'enable1@test',
+    date,
+    today,
+  )
 
 describe('puzzleFor', () => {
   test("serves today's start word with every accepted shorter word", () => {

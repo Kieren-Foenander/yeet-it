@@ -2,7 +2,6 @@ import { Array, Data, Option } from 'effect'
 
 import { addDays, type IsoDate, isValidIsoDate } from '../game/day.ts'
 import { PUZZLE_FORMAT, type Puzzle } from '../game/puzzle.ts'
-import { spellableWords } from '../game/subwords.ts'
 import type { Schedule } from '../generator/schedule.ts'
 
 /** Allow one day ahead so a device clock slightly past midnight UTC still gets its puzzle. */
@@ -19,7 +18,7 @@ export const Lookup = Data.taggedEnum<Lookup>()
 
 export const puzzleFor = (
   schedule: Schedule,
-  dictionary: ReadonlyArray<string>,
+  wordsFor: (start: string) => ReadonlyArray<string>,
   dictionaryVersion: string,
   date: string,
   today: IsoDate,
@@ -43,7 +42,7 @@ export const puzzleFor = (
             number: entry.number,
             date: entry.date,
             start: entry.start,
-            words: spellableWords(entry.start, dictionary),
+            words: wordsFor(entry.start),
             route: entry.route,
             dictionary: dictionaryVersion,
           },
