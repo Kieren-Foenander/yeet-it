@@ -49,3 +49,13 @@ Where the extra ~8 KB gzip over the slice goes (source-map raw bytes): view
 Stream/Channel/Queue for the rollover subscription, and Schema JSON codecs for
 saved progress. The app stays ~7 KB gzip over the 100 KB target; the Foldkit +
 Effect floor measured in milestone 1 is ~97 KB gzip on its own.
+
+## Independent handoff verification (2026-10-30)
+
+`pnpm check` passed: Oxfmt, Oxlint with the generic and Effect anti-slop rules,
+typechecking, all 68 tests, and verification of all 401 scheduled puzzles. The
+live Worker returned the expected current puzzle. A fresh `pnpm dev` session
+was checked in a 375 × 667 Chromium viewport: a complete 6/6 run and reload
+restored the finished result and streak, with no browser errors or failed HTTP
+responses. The transient dev optimiser failure from the earlier session did
+not reproduce; no runtime fix was made or claimed.

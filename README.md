@@ -51,7 +51,7 @@ consecutive UTC days with a finished run.
 The deployment toolchain is a separate workspace package because Alchemy
 2.0.0-beta.84 runs on effect 4.0.x (it imports `effect/Crypto`, which 4.1 moved)
 while Foldkit 0.170 requires effect 4.1.x. `infra/` pins effect 4.0.7; the app pins
-4.1.0. Neither reaches the browser bundle.
+4.1.0. Deployment dependencies stay out of the browser bundle.
 
 ## Puzzle supply (no manual selection)
 
@@ -111,6 +111,7 @@ scheduled, and (with `--published <old schedule>`) that no published day changed
 
 ```sh
 pnpm install
+pnpm dev                 # local Foldkit app and Worker through Alchemy
 pnpm test                # rules, generator invariants, Worker, Foldkit story/scene tests
 pnpm lint                # Oxlint + anti-slop (generic and Effect rule groups)
 pnpm format:check        # Oxfmt

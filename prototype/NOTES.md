@@ -8,4 +8,4 @@ Rules: rearrange freely; permanently remove at least one letter per submission; 
 
 Dictionary: ENABLE1, fetched from https://github.com/dolph/dictionary/blob/master/enable1.txt and restricted to possible subsets of the four practice starting words. Some obscure and inflected words count. A memoized solver computes the actual longest chain for each puzzle and reveals one route after finishing.
 
-Playtest verdict: pending user feedback.
+Playtest verdict: the user played it, found it fun, and approved the mechanics. They preferred a fixed nine-letter starting word so every daily puzzle has a six-point maximum and a consistent share-grid shape. The production game now lives in `src/`.
