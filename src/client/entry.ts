@@ -2,7 +2,9 @@ import './styles.css'
 
 import { Runtime } from 'foldkit'
 
-import { Flags, flags, init, Model, update, view } from './main.ts'
+import { flags, init, subscriptions, update } from './main.ts'
+import { Flags, Model } from './model.ts'
+import { view } from './view.ts'
 
 const application = Runtime.makeApplication({
   Model,
@@ -10,6 +12,7 @@ const application = Runtime.makeApplication({
   init,
   update,
   view,
+  subscriptions,
   container: document.getElementById('root'),
 })
 

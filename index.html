@@ -2,11 +2,72 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, viewport-fit=cover"
+    />
+    <meta
+      name="description"
+      content="A daily word game: make a shorter word, yeet the unused letters forever, and chain all the way down to three."
+    />
+    <meta name="theme-color" content="#1f7a4b" />
+    <link
+      rel="icon"
+      href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='7' fill='%231f7a4b'/%3E%3Ctext x='16' y='23' font-family='system-ui,sans-serif' font-size='20' font-weight='900' font-style='italic' text-anchor='middle' fill='white'%3Ey%3C/text%3E%3C/svg%3E"
+    />
     <title>yeet it</title>
   </head>
   <body>
     <div id="root"></div>
+    <noscript><p class="app">yeet it needs JavaScript to play.</p></noscript>
+    <div class="app static">
+      <details class="rules">
+        <summary>How to play</summary>
+        <ul>
+          <li>
+            Everyone gets the same nine-letter word each day. It changes at
+            midnight UTC.
+          </li>
+          <li>
+            Make a shorter word from your letters. Rearrange freely; use each
+            letter as often as it appears.
+          </li>
+          <li>
+            Every word must drop at least one letter and keep at least three.
+          </li>
+          <li>
+            Unused letters are yeeted forever. Each new word scores 1; the
+            starting word scores nothing. Best possible: 6.
+          </li>
+          <li>
+            Dropping several letters at once skips lengths, and skipped lengths
+            are lost points.
+          </li>
+          <li>Invalid words cost nothing. Submitted words can’t be undone.</li>
+          <li>
+            The run ends at three letters, when no shorter word is left, or when
+            you finish.
+          </li>
+          <li>
+            Your result shows lengths 8 down to 3: green for a word made, black
+            for a length missed.
+          </li>
+        </ul>
+      </details>
+      <footer>
+        <p>
+          Words:
+          <a href="https://github.com/dolph/dictionary">ENABLE</a> (public
+          domain). Puzzle familiarity:
+          <a href="https://github.com/rspeer/wordfreq">wordfreq</a> by Robyn
+          Speer,
+          <a href="https://creativecommons.org/licenses/by-sa/4.0/"
+            >CC BY-SA 4.0</a
+          >. <a href="https://github.com/Kieren-Foenander/yeet-it">Source</a>.
+          Progress stays on this device.
+        </p>
+      </footer>
+    </div>
     <script type="module" src="/src/client/entry.ts"></script>
   </body>
 </html>
