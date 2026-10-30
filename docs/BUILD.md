@@ -78,6 +78,14 @@ Mobile-first, fast, accessible, clean typography with system fonts, lightweight 
 
 Serve cacheable HTML/CSS/JS through Workers Static Assets. Local gameplay after loading: no per-guess network request, no AI judge. Scope v1 to daily play, progress/streaks, instructions, sharing, and generation. Keep dependency and visual overhead low. Separate deployment dependencies from browser entrypoints, measure bundles, and use cache-safe versioned puzzle data.
 
+## Lint and formatting (added 2026-10-30)
+
+Use Dillon Mulroy's anti-slop Oxlint rules (https://github.com/dmmulroy/anti-slop), vendored from upstream source with its licence and a recorded upstream revision (there is no official npm package). Enable every generic rule and the separate Effect rule group. Pin `oxlint` and `@oxlint/plugins` to the same exact version. Format with Oxfmt. Provide `lint`, `format`, and `format:check` scripts and run lint and format verification in CI. Apply the rules to owned application, generator, test, and configuration code; keep upstream's ignores for the vendored rules and agent tooling. Fix findings instead of disabling rules or excluding owned code.
+
+## Content policy (added 2026-10-30)
+
+No offensive-word filtering. The user explicitly rejected blocklists: familiarity for start words and guaranteed routes comes from frequency thresholds only, and the ENABLE dictionary stays unfiltered.
+
 ## Verification and deployment
 
 Test duplicate letters, permanent deletions, same-length rejection, skipped-length scores/share rows, three-letter finish, true dead ends, dictionary membership, save/restore, daily rollover, and the generator's familiar six-step route invariant. Verify accessible mobile interactions and clipboard fallback where feasible. Run typecheck, meaningful tests, production build, and compressed bundle measurement.

@@ -1,0 +1,53 @@
+{
+  "name": "yeet-it",
+  "version": "1.0.0",
+  "private": true,
+  "description": "A daily word game: make a shorter word, yeet the unused letters forever.",
+  "license": "MIT",
+  "type": "module",
+  "packageManager": "pnpm@11.10.0",
+  "engines": {
+    "node": ">=24"
+  },
+  "scripts": {
+    "dev": "alchemy dev",
+    "build": "vite build",
+    "preview": "vite preview",
+    "typecheck": "tsc --noEmit",
+    "test": "vitest run",
+    "lint": "oxlint",
+    "lint:fix": "oxlint --fix",
+    "format": "oxfmt",
+    "format:check": "oxfmt --check",
+    "check": "pnpm format:check && pnpm lint && pnpm typecheck && pnpm test && pnpm puzzles:verify",
+    "puzzles:generate": "node scripts/puzzles.ts generate",
+    "puzzles:verify": "node scripts/puzzles.ts verify",
+    "measure": "node scripts/measure-bundle.ts",
+    "deploy": "alchemy deploy",
+    "destroy": "alchemy destroy"
+  },
+  "dependencies": {
+    "@effect/platform-browser": "4.1.0",
+    "effect": "4.1.0",
+    "foldkit": "0.170.0"
+  },
+  "devDependencies": {
+    "@alchemy.run/cloudflare": "2.0.0-beta.84",
+    "@alchemy.run/domain": "2.0.0-beta.84",
+    "@alchemy.run/frontend-frameworks": "2.0.0-beta.84",
+    "@cloudflare/workers-types": "5.20261030.1",
+    "@effect/platform-node": "4.1.0",
+    "@effect/vitest": "4.1.0",
+    "@foldkit/vite-plugin": "0.29.0",
+    "@oxlint/plugins": "1.90.0",
+    "@types/node": "26.6.6",
+    "alchemy": "2.0.0-beta.84",
+    "happy-dom": "21.0.4",
+    "oxfmt": "0.75.0",
+    "oxlint": "1.90.0",
+    "typescript": "7.0.2",
+    "vite": "8.3.5",
+    "vitest": "5.0.5",
+    "ws": "8.22.0"
+  }
+}
