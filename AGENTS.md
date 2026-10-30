@@ -19,3 +19,9 @@ Read `docs/BUILD.md` before implementing. The user has approved the requirements
 - Fix findings in owned code (application, generator, tests, configuration). Do not disable rules globally or exclude owned code to get green checks. Ignores are limited to the vendored rule source, agent tooling directories, generated/vendored data, build output, and the frozen `prototype/` reference.
 - Commit and push coherent milestones to `origin/main` as work progresses.
 - Do not filter offensive words from the dictionary, start words, or routes. Familiarity is decided by frequency thresholds only.
+
+## Project notes
+
+- Deployment tooling lives in the `infra/` workspace package pinned to effect 4.0.7, because Alchemy 2.0.0-beta.84 imports `effect/Crypto` (absent in 4.1). The app pins effect 4.1.0 for Foldkit 0.170. Do not hoist Alchemy into the root package. Deploy with `pnpm deploy:prod` (not `pnpm deploy`, which is a pnpm built-in).
+- `data/schedule.json` is append-only. Change it only through `pnpm puzzles:generate`; CI rejects edits to published days. Bump `GENERATOR_VERSION` when selection logic changes; older entries keep their recorded versions.
+- Vite's dev server re-optimises Effect deps mid-session (504 "Outdated Optimize Dep"); verify UI against `pnpm build` output (`vite preview` with `/api` proxied to the live Worker) when dev mode misbehaves.
