@@ -1,0 +1,44 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          fetch-depth: 0
+      - uses: ./.github/actions/setup
+
+      - name: Format
+        run: pnpm format:check
+      - name: Lint (Oxlint + anti-slop)
+        run: pnpm lint
+      - name: Typecheck
+        run: pnpm typecheck
+      - name: Test
+        run: pnpm test
+
+      - name: Verify the puzzle schedule and that published days are unchanged
+        env:
+          BASE: ${{ github.event.pull_request.base.sha || github.event.before }}
+        run: |
+          if [ -n "$BASE" ] && git cat-file -e "$BASE:data/schedule.json" 2>/dev/null; then
+            git show "$BASE:data/schedule.json" > "$RUNNER_TEMP/published.json"
+            pnpm puzzles:verify --published "$RUNNER_TEMP/published.json"
+          else
+            pnpm puzzles:verify
+          fi
+
+      - name: Build
+        run: pnpm build
+      - name: Measure the compressed bundle
+        run: node scripts/measure-bundle.ts

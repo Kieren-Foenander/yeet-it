@@ -36,10 +36,10 @@ Adds styling, persisted runs and streaks, midnight-UTC rollover, finish
 confirmation, shuffle, backspace/clear, result card, clipboard copy with a
 selected manual-copy fallback, and the solution reveal.
 
-| Build | Raw | gzip -9 | brotli q11 |
-| --- | --- | --- | --- |
-| First full build (KeyValueStore persistence, rules in JS) | 336.3 KB | 108.7 KB | 94.6 KB |
-| Direct `localStorage` in Effect, static rules/credits in HTML | 332.2 KB | 107.1 KB | 93.3 KB |
+| Build                                                         | Raw      | gzip -9  | brotli q11 |
+| ------------------------------------------------------------- | -------- | -------- | ---------- |
+| First full build (KeyValueStore persistence, rules in JS)     | 336.3 KB | 108.7 KB | 94.6 KB    |
+| Direct `localStorage` in Effect, static rules/credits in HTML | 332.2 KB | 107.1 KB | 93.3 KB    |
 
 `index.html` (which now carries the rules and data credits, visible before JS
 runs) is 2.8 KB raw / 1.3 KB gzip.

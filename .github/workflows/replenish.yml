@@ -1,0 +1,52 @@
+name: Replenish puzzles
+
+# Keeps roughly 400 days of verified puzzles scheduled ahead. Gameplay never
+# depends on this job: the buffer is months deep, and a failure here (pool
+# exhausted, verification failed) fails loudly instead of publishing anything.
+
+on:
+  schedule:
+    - cron: '17 3 * * 1'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: replenish
+  cancel-in-progress: false
+
+jobs:
+  extend:
+    runs-on: ubuntu-latest
+    outputs:
+      changed: ${{ steps.commit.outputs.changed }}
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+      - uses: ./.github/actions/setup
+      - name: Extend and verify the schedule
+        run: |
+          cp data/schedule.json "$RUNNER_TEMP/published.json"
+          pnpm puzzles:generate
+          pnpm puzzles:verify --published "$RUNNER_TEMP/published.json"
+          pnpm test src/generator src/worker
+      - name: Commit new days
+        id: commit
+        run: |
+          if git diff --quiet -- data/schedule.json; then
+            echo "changed=false" >> "$GITHUB_OUTPUT"
+            exit 0
+          fi
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          last=$(grep -o '"date":"[0-9-]*"' data/schedule.json | tail -1 | cut -d'"' -f4)
+          git add data/schedule.json
+          git commit -m "Extend puzzle schedule through $last"
+          git push
+          echo "changed=true" >> "$GITHUB_OUTPUT"
+
+  deploy:
+    needs: extend
+    if: needs.extend.outputs.changed == 'true'
+    uses: ./.github/workflows/deploy.yml
+    secrets: inherit

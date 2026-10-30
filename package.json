@@ -3,14 +3,13 @@
   "version": "1.0.0",
   "private": true,
   "description": "A daily word game: make a shorter word, yeet the unused letters forever.",
-  "license": "MIT",
   "type": "module",
   "packageManager": "pnpm@11.10.0",
   "engines": {
     "node": ">=24"
   },
   "scripts": {
-    "dev": "pnpm --filter yeet-it-infra dev",
+    "dev": "pnpm --filter yeet-it-infra run dev",
     "build": "vite build",
     "preview": "vite preview",
     "typecheck": "tsc --noEmit && tsc --noEmit -p tsconfig.worker.json && tsc --noEmit -p infra/tsconfig.json",
@@ -23,8 +22,7 @@
     "puzzles:generate": "node scripts/puzzles.ts generate",
     "puzzles:verify": "node scripts/puzzles.ts verify",
     "measure": "node scripts/measure-bundle.ts",
-    "deploy": "pnpm --filter yeet-it-infra deploy",
-    "destroy": "pnpm --filter yeet-it-infra destroy"
+    "deploy:prod": "pnpm --filter yeet-it-infra run deploy"
   },
   "dependencies": {
     "@effect/platform-browser": "4.1.0",
